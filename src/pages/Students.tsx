@@ -329,109 +329,217 @@ const Students: React.FC = () => {
         overflow: 'hidden',
         position: 'relative'
       }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse'  }}>
-          <thead style={{ backgroundColor: '#f9fafb', borderBottom: '1px solid #e5e7eb' }}>
-            <tr>
-              <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
-                Student ID
-              </th>
-              <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
-                Name
-              </th>
-              <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
-                Email
-              </th>
-              <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
-                Program
-              </th>
-              <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
-                Year
-              </th>
-              <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
-                Status
-              </th>
-              <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody style={{ backgroundColor: 'white', borderBottom: '1px solid #e5e7eb' }}>
-            {currentStudents.map((student) => (
-              <tr key={student.id} style={{ borderBottom: '1px solid #f3f4f6' }}>
-                <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
-                  <div style={{ fontSize: '14px', color: '#111827' }}>{student.student_id}</div>
-                </td>
-                <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
-                  <div style={{ fontSize: '14px', fontWeight: '500', color: '#111827' }}>
+        {/* Desktop Table View */}
+        <div style={{ display: window.innerWidth >= 768 ? 'block' : 'none' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead style={{ backgroundColor: '#f9fafb', borderBottom: '1px solid #e5e7eb' }}>
+              <tr>
+                <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
+                  Student ID
+                </th>
+                <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
+                  Name
+                </th>
+                <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
+                  Email
+                </th>
+                <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
+                  Program
+                </th>
+                <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
+                  Year
+                </th>
+                <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
+                  Status
+                </th>
+                <th style={{ padding: '8px 12px', textAlign: 'left', fontSize: '12px', fontWeight: '500', color: '#6b7280', textTransform: 'uppercase' }}>
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody style={{ backgroundColor: 'white', borderBottom: '1px solid #e5e7eb' }}>
+              {currentStudents.map((student) => (
+                <tr key={student.id} style={{ borderBottom: '1px solid #f3f4f6' }}>
+                  <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '14px', color: '#111827' }}>{student.student_id}</div>
+                  </td>
+                  <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '14px', fontWeight: '500', color: '#111827' }}>
+                      {student.first_name} {student.last_name}
+                    </div>
+                  </td>
+                  <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '14px', color: '#111827' }}>{student.email}</div>
+                  </td>
+                  <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '14px', color: '#111827' }}>{student.program}</div>
+                  </td>
+                  <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '14px', color: '#111827' }}>{student.year_level}</div>
+                  </td>
+                  <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
+                    <span style={{
+                      padding: '4px 8px',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      borderRadius: '9999px',
+                      backgroundColor: student.status === 'active' ? '#dcfce7' :
+                                    student.status === 'inactive' ? '#fef3c7' : '#fee2e2',
+                      color: student.status === 'active' ? '#166534' :
+                              student.status === 'inactive' ? '#92400e' : '#991b1b',
+                    }}>
+                      {student.status === 'active' ? 'Active' :
+                       student.status === 'inactive' ? 'Inactive' : 'Graduated'}
+                    </span>
+                  </td>
+                  <td style={{ padding: '12px', whiteSpace: 'nowrap', fontSize: '14px' }}>
+                    <select
+                      value={student.status}
+                      onChange={(e) => handleStatusChange(student.id, e.target.value as 'active' | 'inactive' | 'graduated')}
+                      style={{
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        border: '1px solid #d1d5db',
+                        fontSize: '12px',
+                        cursor: 'pointer',
+                        marginRight: '12px'
+                      }}
+                      title="Change Student Status"
+                    >
+                      <option value="active">🟢 Enrolled</option>
+                      <option value="inactive">🟡 Not Enrolled</option>
+                      <option value="graduated">🔵 Graduated</option>
+                    </select>
+                    <button
+                      onClick={() => handleEdit(student)}
+                      style={{
+                        color: '#3b82f6',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: '4px',
+                        borderRadius: '4px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                      title="Edit Student"
+                    >
+                      <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828L8.586-8.586z" />
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div style={{ display: window.innerWidth < 768 ? 'block' : 'none' }}>
+          {currentStudents.map((student) => (
+            <div key={student.id} style={{
+              background: 'white',
+              borderRadius: '12px',
+              padding: '16px',
+              marginBottom: '12px',
+              border: '1px solid #e5e7eb',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+              transition: 'all 0.3s ease'
+            }}>
+              {/* Student Header */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '12px',
+                paddingBottom: '12px',
+                borderBottom: '1px solid #f3f4f6'
+              }}>
+                <div>
+                  <div style={{ fontSize: '16px', fontWeight: '600', color: '#111827', marginBottom: '4px' }}>
                     {student.first_name} {student.last_name}
                   </div>
-                </td>
-                <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
-                  <div style={{ fontSize: '14px', color: '#111827' }}>{student.email}</div>
-                </td>
-                <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
-                  <div style={{ fontSize: '14px', color: '#111827' }}>{student.program}</div>
-                </td>
-                <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
-                  <div style={{ fontSize: '14px', color: '#111827' }}>{student.year_level}</div>
-                </td>
-                <td style={{ padding: '12px', whiteSpace: 'nowrap' }}>
-                  <span style={{
-                    padding: '4px 8px',
-                    fontSize: '12px',
+                  <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: '500' }}>
+                    {student.student_id}
+                  </div>
+                </div>
+                <span style={{
+                  padding: '6px 12px',
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  borderRadius: '20px',
+                  backgroundColor: student.status === 'active' ? '#dcfce7' :
+                                student.status === 'inactive' ? '#fef3c7' : '#fee2e2',
+                  color: student.status === 'active' ? '#166534' :
+                          student.status === 'inactive' ? '#92400e' : '#991b1b',
+                }}>
+                  {student.status === 'active' ? 'Active' :
+                   student.status === 'inactive' ? 'Inactive' : 'Graduated'}
+                </span>
+              </div>
+
+              {/* Student Details */}
+              <div style={{ display: 'grid', gap: '8px' }}>
+                <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                  <strong style={{ color: '#374151' }}>📧 Email:</strong> {student.email}
+                </div>
+                <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                  <strong style={{ color: '#374151' }}>📚 Program:</strong> {student.program}
+                </div>
+                <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                  <strong style={{ color: '#374151' }}>📅 Year:</strong> {student.year_level}
+                </div>
+              </div>
+
+              {/* Mobile Actions */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: '12px',
+                paddingTop: '12px',
+                borderTop: '1px solid #f3f4f6'
+              }}>
+                <select
+                  value={student.status}
+                  onChange={(e) => handleStatusChange(student.id, e.target.value as 'active' | 'inactive' | 'graduated')}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    border: '1px solid #d1d5db',
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                    flex: '1',
+                    marginRight: '8px'
+                  }}
+                  title="Change Student Status"
+                >
+                  <option value="active">🟢 Enrolled</option>
+                  <option value="inactive">🟡 Not Enrolled</option>
+                  <option value="graduated">🔵 Graduated</option>
+                </select>
+                <button
+                  onClick={() => handleEdit(student)}
+                  style={{
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+                    color: 'white',
+                    padding: '8px 16px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    fontSize: '14px',
                     fontWeight: '500',
-                    borderRadius: '9999px',
-                    backgroundColor: student.status === 'active' ? '#dcfce7' :
-                                  student.status === 'inactive' ? '#fef3c7' : '#fee2e2',
-                    color: student.status === 'active' ? '#166534' :
-                            student.status === 'inactive' ? '#92400e' : '#991b1b',
-                  }}>
-                    {student.status === 'active' ? 'Active' :
-                     student.status === 'inactive' ? 'Inactive' : 'Graduated'}
-                  </span>
-                </td>
-                <td style={{ padding: '12px', whiteSpace: 'nowrap', fontSize: '14px' }}>
-                  <select
-                    value={student.status}
-                    onChange={(e) => handleStatusChange(student.id, e.target.value as 'active' | 'inactive' | 'graduated')}
-                    style={{
-                      padding: '4px 8px',
-                      borderRadius: '4px',
-                      border: '1px solid #d1d5db',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                      marginRight: '12px'
-                    }}
-                    title="Change Student Status"
-                  >
-                    <option value="active">🟢 Enrolled</option>
-                    <option value="inactive">🟡 Not Enrolled</option>
-                    <option value="graduated">🔵 Graduated</option>
-                  </select>
-                  <button
-                    onClick={() => handleEdit(student)}
-                    style={{
-                      color: '#3b82f6',
-                      backgroundColor: 'transparent',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: '4px',
-                      borderRadius: '4px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                    title="Edit Student"
-                  >
-                    <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                    </svg>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  ✏️ Edit
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Pagination Controls */}
