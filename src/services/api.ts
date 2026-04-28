@@ -18,7 +18,7 @@ interface Student {
   updated_at: string;
 }
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://itew6-finals-project-backend-main-taaebd.free.laravel.cloud/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
