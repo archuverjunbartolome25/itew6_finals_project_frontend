@@ -173,6 +173,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <img 
               src="/1.jpg" 
               alt="CCS Logo" 
+              onError={(e) => {
+                console.error('Logo failed to load:', e);
+                const target = e.target as HTMLImageElement;
+                target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAwIDEyOCAyOCIgeG1sbnM9Imh0dHA6Ly93d3CudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmZjZjRmIj48dGV4dCB4PSI1MDAlIiB5PSI1MDAlIiBmb250LXNpemU9IjE2cHgiIGZvbnQtZmFtaWx5PSJBcmlhbCI+Q0NTPC90ZXh0PjwvcmVjdD48L3N2Zz4=';
+              }}
+              onLoad={() => console.log('Logo loaded successfully')}
               style={{
                 width: (isMobile ? '35px' : (sidebarCollapsed && !sidebarHovered && !isMobile) ? '30px' : '45px'),
                 height: (isMobile ? '35px' : (sidebarCollapsed && !sidebarHovered && !isMobile) ? '30px' : '45px'),
@@ -181,7 +187,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 border: (isMobile ? '2px solid #ff6b35' : (sidebarCollapsed && !sidebarHovered && !isMobile) ? '2px solid #ff6b35' : '3px solid #ff6b35'),
                 marginBottom: '8px',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 4px 15px rgba(255,107,53,0.3)'
+                boxShadow: '0 4px 15px rgba(255,107,53,0.3)',
+                display: 'block',
+                backgroundColor: '#f8f9fa'
               }}
             />
             {!(sidebarCollapsed && !sidebarHovered && !isMobile) && (
