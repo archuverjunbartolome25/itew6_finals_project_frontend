@@ -26,7 +26,5 @@
   "installCommand": "npm install",
   "framework": "vite",
   "devCommand": "npm run dev",
-  "functions": {},
-  "regions": ["iad1"],
-  "functionsDirectory": "api"
+  "regions": ["iad1"]
 }
