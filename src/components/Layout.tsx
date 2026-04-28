@@ -15,7 +15,6 @@ const navigation = [
   { name: 'Students', href: '/students', icon: UserGroupIcon },
   { name: 'Subjects', href: '/subjects', icon: BookOpenIcon },
   { name: 'Curriculum', href: '/curriculum', icon: AcademicCapIcon },
-  { name: 'Deployments', href: '/deployments', icon: AcademicCapIcon },
   { name: 'Student Profiling', href: '/student-profiling', icon: UserCircleIcon },
 ];
 
